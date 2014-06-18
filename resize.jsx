@@ -1,23 +1,32 @@
 ﻿#target photoshop
 
-var image = app.activeDocument,
-    height = image.height,
-    width = image.width,
-    resolution = image.resolution,
-    ratio = width / height,
-    newName =  image.name + '-web.jpg',
-    newWidth = 306;
+var numImages = app.documents.length - 1;
 
-newHeight = (1.0 * newWidth) / ratio
-newHeight = Math.round(newHeight);
+while (numImages >= 0) {
 
-resampleMeth = ResampleMethod.BICUBICSHARPER;
+	app.activeDocument = app.documents[numImages];
 
-image.resizeImage(newWidth, newHeight, resolution, resampleMeth);
+    var image = app.activeDocument,
+        height = image.height,
+        width = image.width,
+        resolution = image.resolution,
+        ratio = width / height,
+        newName =  image.name + '-web.jpg',
+        newWidth = 306;
 
-var options = new ExportOptionsSaveForWeb();
-options.quality = 90;
-options.format = SaveDocumentType.JPEG;
-options.optimized = true;
+    newHeight = (1.0 * newWidth) / ratio
+    newHeight = Math.round(newHeight);
 
-image.exportDocument(File(image.path + '/' + newName), ExportType.SAVEFORWEB, options);
+    resampleMeth = ResampleMethod.BICUBICSHARPER;
+
+    image.resizeImage(newWidth, newHeight, resolution, resampleMeth);
+
+    var options = new ExportOptionsSaveForWeb();
+    options.quality = 90;
+    options.format = SaveDocumentType.JPEG;
+    options.optimized = true;
+
+    image.exportDocument(File(image.path + '/' + newName), ExportType.SAVEFORWEB, options);
+    
+    numImages --;
+}
