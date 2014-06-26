@@ -1,6 +1,7 @@
 ﻿#target photoshop
 
-var numImages = app.documents.length - 1;
+var numImages = app.documents.length - 1,
+    newWidth = parseInt(prompt("Enter the new width: ", 306));
 
 while (numImages >= 0) {
 
@@ -11,8 +12,7 @@ while (numImages >= 0) {
         width = image.width,
         resolution = image.resolution,
         ratio = width / height,
-        newName =  image.name + '-web.jpg',
-        newWidth = 306;
+        newName =  image.name + '-web.jpg';
 
     newHeight = (1.0 * newWidth) / ratio
     newHeight = Math.round(newHeight);
@@ -27,6 +27,6 @@ while (numImages >= 0) {
     options.optimized = true;
 
     image.exportDocument(File(image.path + '/' + newName), ExportType.SAVEFORWEB, options);
-    
+
     numImages --;
 }
